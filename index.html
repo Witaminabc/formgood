@@ -1,35 +1,107 @@
-<template>
-  
-<form
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style lang="scss" scoped>
+    #game-hits {
+        font-size: var(--base-font);
+        color: #444;
+        background-color:white;
+    }
+    input, select, textarea{
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+
+
+
+
+label {
+  padding: 12px 12px 12px 0;
+  display: inline-block;
+}
+
+input[type=submit] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  float: right;
+}
+.checkbox1{
+    padding: 12px 12px;
+    width: 100%;
+    float: left;
+
+}
+#sms{
+  width: 20px;
+}
+    .container {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+
+.col-25 {
+  float: left;
+  width: 25%;
+  margin-top: 6px;
+}
+
+.col-75 {
+  float: right;
+  width: 75%;
+  margin-top: 6px;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+</style>
+</head>
+<body>
+  <form
   @submit="checkForm"
   action="https://vuejs.org/"
   method="post"
   id='game-hits' class='container'
 >
-<div class='row'>
-  <p v-if="errors.length">
-    <b>Пожалуйста исправьте указанные ошибки:</b>
+<template v-if="errors.length"><b>Пожалуйста исправьте указанные ошибки:</b>
     <ul>
       <li v-for="error in errors">{{ error }}</li>
     </ul>
-  </p>
-  <p v-else>
-  {{good}}
-  </p>
+  </template> 
+    
 
-  <p>
-    <div class="col-25"><label for="name">Имя</label></div>
-    <div class="col-75"><input
+    <template v-else>
+  {{good}}
+  </template>
+  
+<div class='row'>
+  <div class="col-75"><input
       id="name"
       v-model="name"
       type="text"
       name="name"
     >
-    </div>
+     
 
-  </p>
-  <p>
-    <div class="col-25"><label for="family">Фамилия</label></div>
+    </div>
+    <div class="col-25">
+      <label for="name">Имя</label>
+    </div>
+    
 
     <div class="col-75"><input
       id="family"
@@ -37,26 +109,27 @@
       type="text"
       name="family"
     >
-        </div>
+      
+       </div>
+    <div class="col-25">
+      <label for="family">Фамилия</label>
+    </div>
 
-  </p>
-  <p>
-    <div class="col-25"><label  for="soname">Отчество</label></div>
-    <div class="col-75"><input
+   
+  
+  <div class="col-75"><input
       id="soname"
       v-model="soname"
       type="text"
       name="soname"
     >
     </div>
-  </p>
+    <div class="col-25"><label  for="soname">Отчество</label></div>
+    
+  
 
-  <p>
-
-    <div class="col-25"><label for="age">Возраст</label></div>
-
-
-    <div class="col-75"><input
+  
+<div class="col-75"><input
       id="age"
       v-model="age"
       type="number"
@@ -64,25 +137,27 @@
       min="0"
     >
         </div>
+    <div class="col-25"><label for="age">Возраст</label></div>
 
-  </p>
-  <p>
+
+    
+
+  
+  
+<div class="col-75"><input 
+  type="tel"
+   name="tel" 
+   v-model="tel"
+  pattern="7\d{10}">
+          </div>
 
   <div class="col-25"><label for="tel">Телефон</label>
           </div>
 
 
-  <div class="col-75"><input 
-  type="tel"
-   name="tel" 
-   v-model="tel"
-  pattern="7">
-          </div>
-
-  </p>
-   <p>
-    <div class="col-25"><label for="gender">Пол</label></div>
-    <div class="col-75">
+  
+  
+   <div class="col-75">
     <select
       id="gender"
       v-model="gender"
@@ -93,24 +168,24 @@
       
     </select>
     </div>
-  </p>
-  <p>
-    <div class="col-25"><label for="typeperson">Группа клиентов</label></div>
-    <div class="col-75">
+    <div class="col-25"><label for="gender">Пол</label></div>
+    
+  
+  <div class="col-75">
     <select
       id="typeperson"
+      name="typeperson" 
       v-model="typeperson"
-      name="typeperson" multiple
-    >
+      multiple>
       <option>VIP</option>
       <option>Проблемные</option>
       <option>ОМС</option>
     </select>
     </div>
-  </p>
-  <p>
-    <div class="col-25"><label for="docter">Лечащий врач</label></div>
-    <div class="col-75">
+
+    <div class="col-25"><label for="typeperson">Группа клиентов</label></div>
+  
+  <div class="col-75">
     <select
       id="docter"
       v-model="docter"
@@ -121,27 +196,28 @@
       <option>Чернышева</option>
     </select>
         </div>
-
-  </p> 
-    <p>
-    <div class="col-25"><label for="sms">не отправлять смс</label>
+    <div class="col-25"><label for="docter">Лечащий врач</label></div>
+    
+ <div class="checkbox1">
+  <label for="sms">не отправлять смс</label>
  <input 
   type="checkbox" 
   id="sms"
    name="sms" 
-   v-model="sms"></div>
-<div class="col-75">
-       </div>
+   v-model="sms">
+</div>
+   
+    
+    
 
 
-  </p>
-</br>
-     <p>
+  
+     
                 <div class="col-25"><label for="datebern">Дата рождения: </label></div>
                 <div class="col-75"><input type="date" id="datebern" name="datebern" v-model="datebern"/></div>
-            </p>
+            
 
-  <p>
+  
     <div class="col-25"><label for="country">Страна</label></div>
     <div class="col-75"><input
       id="country"
@@ -149,8 +225,8 @@
       type="text"
       name="country"
     ></div>
-  </p>
-  <p>
+  
+  
     <div class="col-25"><label for="area">Область</label></div>
     <div class="col-75"><input
       id="area"
@@ -158,8 +234,8 @@
       type="text"
       name="area"
     ></div>
-  </p>
-  <p>
+  
+  
     <div class="col-25"><label for="street">Улица</label></div>
     <div class="col-75"><input
       id="street"
@@ -167,8 +243,8 @@
       type="text"
       name="street"
     ></div>
-  </p>
-  <p>
+  
+  
     <div class="col-25"><label for="home">Дом</label></div>
     <div class="col-75"><input
       id="home"
@@ -176,8 +252,8 @@
       type="number"
       name="home"
     ></div>
-  </p>
-  <p>
+  
+  
     <div class="col-25"><label for="name">Индекс</label></div>
     <div class="col-75"><input
       id="name"
@@ -185,8 +261,8 @@
       type="text"
       name="name"
     ></div>
-  </p>
-  <p>
+  
+  
     <div class="col-25"><label for="typedoc">Тип документа</label></div>
      <div class="col-75"><select
       id="typedoc"
@@ -199,8 +275,8 @@
       
     </select>
     </div>
-  </p>
-  <p>
+  
+  
     <div class="col-25"><label for="series">серия</label></div>
     <div class="col-75"><input
       id="series"
@@ -209,8 +285,8 @@
       name="series"
     >    </div>
 
-  </p>
-  <p>
+  
+  
     <div class="col-25"><label for="numnum">номер</label></div>
     <div class="col-75"><input
       id="numnum"
@@ -219,8 +295,8 @@
       name="numnum"
     >    </div>
 
-  </p>
-  <p>
+  
+  
     <div class="col-25"><label for="who">кем выдан</label></div>
     <div class="col-75"><input
       id="who"
@@ -229,13 +305,13 @@
       name="who"
     >    </div>
 
-  </p>
-   <p>
+  
+   
                 <div class="col-25"><label for="dateup">Дата выдачи: </label></div>
                 <div class="col-75"><input type="date" id="dateup" name="dateup" v-model="dateup"/>    </div>
 
-            </p>
-  
+      
+
 
   <div class="col-25"><input
       type="submit"
@@ -244,17 +320,14 @@
 </div>
 </div>
 
-
     </form>
-
-</template>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
 <script>
-    export default {
-        name: 'game-timer',
-        data () {
-            return {
-                errors: [],
+   var vm = new Vue( {
+el: '#game-hits',
+        data :{
+    errors: [],
     name: null,
     family:null,
     soname:null,
@@ -278,14 +351,15 @@
     dateup:'',
     good:''
 
-                }
+                
             },
             
   methods: {
     checkForm: function (e) {
-      if (this.name && this.family && this.tel && this.datebern && this.typeperson && this.city && this.typedoc && this.dateup)  {
+      if (this.name && this.family && this.tel && this.datebern && this.typeperson && this.country && this.typedoc && this.dateup)  {
+        alert('success');
         return true;
-        this.good=='success'
+        
       }
 
       this.errors = [];
@@ -319,65 +393,8 @@
     }
   }
   }
-        
+        )
     
 </script>
-
-<style lang="scss" scoped>
-    #game-hits {
-        font-size: var(--base-font);
-        color: #444;
-        background-color:white;
-    }
-    input, select, textarea{
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-  resize: vertical;
-}
-
-/* Style the label to display next to the inputs */
-label {
-  padding: 12px 12px 12px 0;
-  display: inline-block;
-}
-
-/* Style the submit button */
-input[type=submit] {
-  background-color: #4CAF50;
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  float: right;
-}
-    .container {
-  border-radius: 5px;
-  background-color: #f2f2f2;
-  padding: 20px;
-}
-
-/* Floating column for labels: 25% width */
-.col-25 {
-  float: left;
-  width: 25%;
-  margin-top: 6px;
-}
-
-/* Floating column for inputs: 75% width */
-.col-75 {
-  float: left;
-  width: 75%;
-  margin-top: 6px;
-}
-
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-</style>
+</body>
+</html>
